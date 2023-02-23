@@ -1,0 +1,16 @@
+id,name,price,category
+1,Cheese Pizza,10.00,entree
+2,Sausage Pizza,10.50,entree
+3,Meat Loves Pizza,12.00,entree 
+4,Hawaiian Pizza,11.50,entree
+5,Veggie Pizza,11.00,entree 
+6,Supreme Pizza,13.50,entree
+7,Bread Sticks,6.00,appetizer
+8,Cheese Sticks,5.00,appetizer
+9,Chicken Wings,7.00,appetizer
+10,Coke,1.56,drink
+11,Sprite,1.56,drinks
+12,Fanta,1.56,drinks
+13,Water,1.00,drinks
+14,Cookie,1.02,dessert
+15,Cake,2.3,dessert
