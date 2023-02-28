@@ -6,8 +6,6 @@ from models import Customer, Order, Food, OrderItem #importing customized class 
 # Route to display the homepage
 @app.route('/')
 def index():
-    #db.drop_all()
-    #db.create_all()
     #return to the home page of the app
     return render_template('home.html')
 

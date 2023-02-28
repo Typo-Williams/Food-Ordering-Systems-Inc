@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from socket import gethostname
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///food_ordering.db'
@@ -10,5 +11,12 @@ db = SQLAlchemy(app)
 from routes import *
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #create database
+    db.create_all()
+    #check to see if it is running in pythonanywhere or not
+    #this setting is recommended by pythonanywhere setup guide 
+    # https://help.pythonanywhere.com/pages/Flask
+    if 'liveconsole' not in gethostname():
+        app.run()
+        #app.run(debug=True)
 
