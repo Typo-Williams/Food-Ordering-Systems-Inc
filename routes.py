@@ -9,7 +9,7 @@ def index():
     #db.drop_all()
     #db.create_all()
     #return to the home page of the app
-    return render_template('index.html')
+    return render_template('home.html')
 
 #------CUSTOMER ROUTES----------------
 # Route to create a new customer

@@ -1,28 +1,27 @@
-<html>
-<head>
-    <title>Food List</title>
-</head>
-<body>
-    <h1>Food List</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for food_item in food_items %}
-            <tr>
-                <td>{{ food_item.name }}</td>
-                <td>{{ food_item.price }}</td>
-                <td>{{ food_item.category }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br>
-<a href="/">Home</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+        <div class="topcontainer" id="menutop">
+            <h2>Menu</h2>
+            <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for food_item in food_items %}
+                <tr>
+                    <td>{{ food_item.name }}</td>
+                    <td>{{ food_item.price }}</td>
+                    <td>{{ food_item.category }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+
+        </div>
+        
+        {% endblock %}

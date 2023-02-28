@@ -1,21 +1,26 @@
-<table>
-    <thead>
-      <tr>
-        <th>Customer Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for customer in customers %}
-        <tr>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="/customer">Add New Customer</a>
-  <br>
-<a href="/">Home</a>
+{% extends 'base.html' %}
+{% block content %}
+
+        <div class="topcontainer" id="customerstop">
+          <h2>Customers</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in customers %}
+                <tr>
+                  <td>{{ customer.name }}</td>
+                  <td>{{ customer.email }}</td>
+                  <td>{{ customer.phone }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% endblock %}

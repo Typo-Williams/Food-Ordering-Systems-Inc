@@ -2,114 +2,49 @@
 <html>
 <head>
 <title>Mario's Pizza</title>
-<link rel=stylesheet href="main.css">
+<link rel=stylesheet href=" {{ url_for('static', filename='css/main.css') }}">
 </head>
 <header>
     <h1>Mario's Pizza</h1>
     <nav class="topnav">
         <ul class="navlist">
-            <li><a href="search.html">Search</a></li>
-            <li><a href="customers.html">Customers</a></li>
-            <li><a href="foods.html">Menu</a></li>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/foods">Menu</a></li>
+            <li><a href="/">Home</a></li>
         </ul>
     </nav>
 </header>
+Welcome to food ordering app
+<br>
+
 <body>
     <div class="gridcontainer">
-        <div class="topcontainer" id="searchtop">
-          <h2>Search Form</h2>
-          <form method="get" action="{{ url_for('search') }}">
-            <label for="search_query">Search:</label>
-            <input type="text" name="search_query" id="search_query" required><br><br>
-            <label for="search_type">Search in:</label>
-            <select name="search_type" id="search_type">
-              <option value="customer">Customers</option>
-              <option value="order">Orders</option>
-            </select><br><br>
-            <hr>
-           <input type="submit" value="Search">
-           <br><br>
-          </form>
-    <br>
-    {% if search_results %}
-    <h3>Search Results:</h3>
-    {% if search_type == 'customer' %}
-    <table>
-      <thead>
-        <tr>
-          <th>Customer Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Order Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for customer in search_results %}
-        <tr>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone }}</td>
-          <td><a href="{{ url_for('get_customer_orders', id=customer.id) }}">View Orders</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% elif search_type == 'order' %}
-      
-    <p>Order Details</p>
-    <h3>Order #{{ search_results.order1.id }}</h3>
-    <p>Order Time: {{search_results.order1.order_time}}</p>
-    <p>Customer: {{ search_results.order1.customer.name }}</p>
-  
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in search_results.order_items %}
-          <tr>
-            <td>{{ item.food.name }}</td>
-            <td>{{ item.food.price }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.total_price }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    
-    {% endif %}
-  {% endif %}
-        </div>
+        {% block content %}{% endblock %}
         <div class="middlecontainer1">
-            <a href="/index.html">
+            <a href="/">
                 <div class="types1" id="home">
                     <p>Home</p>
                 </div>
             </a>
-            <a href="/foods.html">
+            <a href="/foods">
                 <div class="types1" id="menu">
                     <p>Menu</p>
                 </div>
             </a>
-            <a href="/customers.html">
+            <a href="/customers">
                 <div class="types1" id="customers">
                     <p>Customers</p>
                 </div>
             </a>
-            <a href="/search.html">
+            <a href="/search">
                 <div class="types1" id="search">
                     <p>Search</p>
                 </div>
             </a>
         </div>
         <div class="middlecontainer2">
-            <a href="/new_order.html">
+            <a href="//order/new">
                 <div class="types2" id="new_order">
                     <p>Create<br>Order</p>
                 </div>
@@ -119,12 +54,12 @@
                     <p>Customer<br>Orders</p>
                 </div>
             </a>
-            <a href="/new_customer.html">
+            <a href="/customer">
                 <div class="types2" id="new_customer">
                     <p>Add<br>Customer</p>
                 </div>
             </a>
-            <a href="/new_food.html">
+            <a href="/food">
                 <div class="types2" id="new_food">
                     <p>Add<br>Food Item</p>
                 </div>

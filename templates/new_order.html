@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>New Order Form</title>
-</head>
-<body>
-  <h1>New Order Form</h1>
-  <form method="post" action="{{ url_for('create_order') }}">
-    <label for="customer_id">Customer:</label>
-    <select name="customer_id" id="customer_id">
-      {% for customer in customers %}
-        <option value="{{ customer.id }}">{{ customer.name }}</option>
-      {% endfor %}
-    </select><br><br>
-    <label for="food_items">Food Items:</label><br>
-    {% for food in foods %}
-      <input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">
-      <label for="food_{{ food.id }}">{{ food.name }} - {{ food.price }}</label><br>
-      <input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"><br>
-    {% endfor %}<br><br>
-    <input type="submit" value="Place Order">
-  </form>
-  <br>
-<a href="/">Home</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="topcontainer" id="new_orderstop">
+          <h2>New Order Form</h2>
+          <form method="post" action="{{ url_for('create_order') }}">
+            <label for="customer_id">Customer:</label>
+            <select name="customer_id" id="customer_id">
+              {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.name }}</option>
+              {% endfor %}
+            </select><br><br>
+            <label for="food_items">Food Items:</label><br>
+            {% for food in foods %}
+              <input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">
+              <label for="food_{{ food.id }}">{{ food.name }} - {{ food.price }}</label><br>
+              <input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"><br>
+            {% endfor %}
+            <hr>
+            <input type="submit" value="Place Order">
+          </form>
+        </div>
+
+        {% endblock %}

@@ -1,47 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Customer Orders</title>
-</head>
-<body>
-    <h1>Orders for Customer {{ customer.name }}</h1>
-    <table>
-        <thead>
-            {% for order in orders %}
-            <tr>
-                <th>Order ID : {{ order.id }}</th>
-                <th>Order Time : {{ order.order_time}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="2">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for order_item in order_items %}    
-                        <tr>
-                            <td>{{ order_item.food_name }}</td>
-                            <td>{{ order_item.quantity }}</td>
-                            <td>${{ order_item.total_price }}</td>
-                        </tr>
-                        {% endfor %}
-                        <tr><td colspan="3" ><bold>Total: ${{order.order_amount}}</bold></td></tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            {% endfor %}
-        
-        </tbody>
-    </table>
-    <br>
-<a href="/">Home</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+   
+        <div class="topcontainer" id="customer_orderstop">
+            <h2>Customer Orders</h2>
+            <h3>Orders for Customer {{ customer.name }}</h3>
+            <table>
+                <thead>
+                    {% for order in orders %}
+                    <tr>
+                        <th>Order ID : {{ order.id }}</th>
+                        <th>Order Time : {{ order.order_time}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for order_item in order_items %}    
+                                <tr>
+                                    <td>{{ order_item.food_name }}</td>
+                                    <td>{{ order_item.quantity }}</td>
+                                    <td>${{ order_item.total_price }}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr><td colspan="3" ><bold>Total: ${{order.order_amount}}</bold></td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+        {% endblock %}
