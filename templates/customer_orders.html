@@ -2,8 +2,8 @@
 {% block content %}
    
         <div class="topcontainer" id="customer_orderstop">
-            <h2>Customer Orders</h2>
-            <h3>Orders for Customer {{ customer.name }}</h3>
+            <h2>Orders Details</h2>
+            <h3>Order by: {{ customer.name }}</h3>
             <table>
                 <thead>
                     {% for order in orders %}

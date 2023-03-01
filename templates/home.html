@@ -5,6 +5,7 @@
     <br>
     <h3> Order Processing System</h3>
 </div>
-
-
 {% endblock %}
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %}

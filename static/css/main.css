@@ -19,7 +19,16 @@ body {
     margin-right: 10%;
 }
 
+input[type="checkbox"],
+input[type="number"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
 
+input[type="number"] {
+    width: 50px;
+}
 
 /*  ---- MAIN TOP SECTION ----  */
 

@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
         <div class="topcontainer" id="new_orderstop">
-          <h2>New Order Form</h2>
+          <h2>Place Order</h2>
           <form method="post" action="{{ url_for('create_order') }}">
-            <label for="customer_id">Customer:</label>
-            <select name="customer_id" id="customer_id">
-              {% for customer in customers %}
-                <option value="{{ customer.id }}">{{ customer.name }}</option>
-              {% endfor %}
-            </select><br><br>
+            
+            {% if current_user.is_admin() %}
+              <label for="customer_id">Customer:</label>
+              <select name="customer_id" id="customer_id">
+                {% for customer in customers %}
+                  <option value="{{ customer.id }}">{{ customer.name }}</option>
+                {% endfor %}
+              </select><br>
+                
+            {% else %}
+              Order for: {{current_user.name }}
+              <input type="hidden" id="customer_id" name="customer_id" value="{{current_user.id}}" min="1"><br>
+            {% endif %}
+
             <label for="food_items">Food Items:</label><br>
             {% for food in foods %}
               <input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">
-              <label for="food_{{ food.id }}">{{ food.name }} - {{ food.price }}</label><br>
+              <label for="food_{{ food.id }}">{{ food.name }} - {{ food.price }}</label>&nbsp;&nbsp;
               <input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"><br>
             {% endfor %}
             <hr>

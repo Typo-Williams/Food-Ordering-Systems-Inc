@@ -5,96 +5,85 @@
 <link rel=stylesheet href=" {{ url_for('static', filename='css/main.css') }}">
 </head>
 <header>
-    <h1>Mario's Pizza</h1>
+    <h1>Mario's Pizza  </h1>
     <nav class="topnav">
         <ul class="navlist">
-            <li><a href="/search">Search</a></li>
-            <li><a href="/customers">Customers</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="/logout">Logout</a></li>
+                {% if current_user.is_admin() is not true %}
+                    <li><a href="/orderhistory">Order History</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/login">Login</a></li>
+            {% endif %}
+            <li><a href="/order">New Order</a></li>
             <li><a href="/foods">Menu</a></li>
             <li><a href="/">Home</a></li>
         </ul>
     </nav>
 </header>
 Welcome to food ordering app
-<br>
 
 <body>
+    
     <div class="gridcontainer">
+        <span>
+            {% if current_user.is_authenticated %}
+                Hi {{ current_user.name }}!
+            {% endif %}
+        </span>
         {% block content %}{% endblock %}
-        <div class="middlecontainer1">
-            <a href="/">
-                <div class="types1" id="home">
-                    <p>Home</p>
-                </div>
-            </a>
-            <a href="/foods">
-                <div class="types1" id="menu">
-                    <p>Menu</p>
-                </div>
-            </a>
-            <a href="/customers">
-                <div class="types1" id="customers">
-                    <p>Customers</p>
-                </div>
-            </a>
-            <a href="/search">
-                <div class="types1" id="search">
-                    <p>Search</p>
-                </div>
-            </a>
-        </div>
-        <div class="middlecontainer2">
-            <a href="//order/new">
-                <div class="types2" id="new_order">
-                    <p>Create<br>Order</p>
-                </div>
-            </a>
-            <a href="/customer_orders.html">
-                <div class="types2" id="customer_orders">
-                    <p>Customer<br>Orders</p>
-                </div>
-            </a>
-            <a href="/customer">
-                <div class="types2" id="new_customer">
-                    <p>Add<br>Customer</p>
-                </div>
-            </a>
-            <a href="/food">
-                <div class="types2" id="new_food">
-                    <p>Add<br>Food Item</p>
-                </div>
-        </div>
+        {% if current_user.is_authenticated and current_user.is_admin() %}
+            <div class="middlecontainer1">
+               
+                <a href="/customer">
+                    <div class="types2" id="new_customer">
+                        <p>Add<br>Customer</p>
+                    </div>
+                </a>
+                <a href="/customers">
+                    <div class="types1" id="customers">
+                        <p>Customers</p>
+                    </div>
+                </a>
+                <a href="/food">
+                    <div class="types2" id="new_food">
+                        <p>Add<br>Food Item</p>
+                    </div>
+                </a>
+                <a href="/search">
+                    <div class="types1" id="search">
+                        <p>Search</p>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
         <div class="bottomcontainer">
         </div>
     </div>
 </body>
-
+<br/>
 <footer>
     <div class="footerone">
         <h3>Navigation</h3>
-        <p><a href="#home">Home</a></p>
-        <p><a href="#menu">Blog</a></p>
-        <p><a href="#order">Store</a></p>
-        <p><a href="#account">Account</a></p>
+        <p><a href="/">Home</a></p>
+        <p><a href="/foods">Menu</a></p>
+        <p><a href="/order">New Order</a></p>
+        <p><a href="/login">Account</a></p>
     </div>
     <div class="footertwo">
         <h3>Resources</h3>
-        <p><a href="#specials">Specials</a></p>
-        <p><a href="#discounts">Discounts</a></p>
-        <p><a href="#catalog">Catalog</a></p>
-        <p><a href="#giftcards">Gift Cards</a></p>
-        <p><a href="#subscriptions">Subscriptions</a></p>       
-        <p><a href="installation">Installation & Services</a></p>
-        <p><a href="#install">Installation Services</a></p>
+        <p><a href="/comingsoon">Specials</a></p>
+        <p><a href="/comingsoon">Discounts</a></p>
+        <p><a href="/comingsoon">Gift Cards</a></p>
+
     </div>
     <div class="footerthree">
         <h3>About Us</h3>
-        <p><a href="#careers">Careers</a></p>
-        <p><a href="#corporate">Corporate Information</a></p>
-        <p><a href="#newsroom">Digital Newsroom</a></p>
-        <p><a href="#suppliers">Suppliers & Providers</a></p>
-        <p><a href="#government">Government Customers</a></p>
-        <p><a href="#edo">Eco Initiatives</a></p>
+        <p><a href="/comingsoon">Careers</a></p>
+        <p><a href="/comingsoon">Corporate Information</a></p>
+        <p><a href="/comingsoon">Digital Newsroom</a></p>
+
         
     </div>
 </footer>

@@ -1,15 +1,22 @@
 from datetime import datetime
 from app import db
-
-class Customer(db.Model):
+from flask_login import UserMixin
+class Customer(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    email = db.Column(db.String(50))
+    email = db.Column(db.String(50),unique=True)
     phone = db.Column(db.String(20))
-    user_name = db.Column(db.String(50))
     user_password = db.Column(db.String(50))
+    role=db.Column(db.Integer,default=1) # 1 for user, 2 for admin
     # Relationship to Order
     orders = db.relationship('Order', backref='customer', lazy=True)
+    
+    def get_id(self):
+        return self.email
+    #checking if user is admin or not
+    def is_admin(self):
+        return self.role == 2
+     
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,16 +25,12 @@ class Order(db.Model):
     # Relationship to OrderItem
     order_items = db.relationship('OrderItem', backref='order', lazy=True)
     
-    #quantity = db.Column(db.Integer)
-    #total_price = db.Column(db.Float)
-    #food_id = db.Column(db.Integer, db.ForeignKey('food.id'), nullable=False)
-
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     price = db.Column(db.Float)
     category=db.Column(db.String(50))
-    #orders = db.relationship('Order', backref='food', lazy=True)
+    
 
 class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,3 +40,4 @@ class OrderItem(db.Model):
     total_price = db.Column(db.Float)
     # Relationship to Food
     food = db.relationship('Food', backref='order_items', lazy=True)
+
