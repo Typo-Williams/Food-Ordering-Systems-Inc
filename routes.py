@@ -112,6 +112,7 @@ def get_customer_orders(id):
     orders = customer.orders #get all the order of this customer
     orders_data = [] #empty array to store order details
     order_items_data=[] #empty array to store order item details
+    
     for order in orders:#loop through all order as a customer can have multiple orders
         order_items_data=[]
         order_data = {
@@ -126,11 +127,13 @@ def get_customer_orders(id):
             order_item ={
                 'food_name':orders_item.food.name,
                 'quantity':orders_item.quantity,
+                'rate':orders_item.food.price,
                 'total_price': orders_item.total_price        
             }
             total_amount=total_amount+orders_item.total_price
             order_items_data.append(order_item) # add this order item to list
         order_data['order_amount']=total_amount # adding actual order amount
+        order_data['order_items']=order_items_data
         orders_data.append(order_data) #add this order to list
     #display particular customer orders details
     return render_template('customer_orders.html',customer=customer,orders=orders_data,order_items=order_items_data)
@@ -184,7 +187,7 @@ def create_order():
             food = Food.query.filter_by(id=food_id).first()
             if food is not None: #if valid food
                 quantity = int(request.form.get('quantity_{}'.format(food_id))) #get quantity by breaking the value after quantity_
-                order_item = OrderItem(food=food, quantity=quantity,total_price=food.price*quantity,order=new_order)
+                order_item = OrderItem(food=food, quantity=quantity,total_price=round(food.price*quantity,2),order=new_order)
                 db.session.add(order_item)
         #commit the changes to the database
         db.session.commit()

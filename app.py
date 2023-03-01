@@ -14,7 +14,7 @@ from routes import *
 if __name__ == '__main__':
     #create database
     #db.drop_all()
-    db.create_all()
+    #db.create_all()
     #check to see if it is running in pythonanywhere or not
     #this setting is recommended by pythonanywhere setup guide 
     # https://help.pythonanywhere.com/pages/Flask

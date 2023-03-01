@@ -8,8 +8,8 @@
                 <thead>
                     {% for order in orders %}
                     <tr>
-                        <th>Order ID : {{ order.id }}</th>
-                        <th>Order Time : {{ order.order_time}}</th>
+                        <th>Order Number : {{ order.id }}</th>
+                        <th> Time : {{ order.order_time}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,18 +20,20 @@
                                     <tr>
                                         <th>Item</th>
                                         <th>Quantity</th>
+                                        <th>Rate</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {% for order_item in order_items %}    
+                                {% for order_item in order.order_items %}    
                                 <tr>
                                     <td>{{ order_item.food_name }}</td>
                                     <td>{{ order_item.quantity }}</td>
+                                    <td>${{ order_item.rate }}</td>
                                     <td>${{ order_item.total_price }}</td>
                                 </tr>
                                 {% endfor %}
-                                <tr><td colspan="3" ><bold>Total: ${{order.order_amount}}</bold></td></tr>
+                                <tr><td colspan="3"><bold>Total: ${{order.order_amount}}</bold></td></tr>
                                 </tbody>
                             </table>
                         </td>
