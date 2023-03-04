@@ -512,7 +512,9 @@ table, .displayNumber{
   }
   
 
-  
+  .newClass{
+    font-size: 14px;
+  }
   .form-group {
     margin-bottom: 10px;
   }
