@@ -264,8 +264,10 @@ def app_setup():
     db.drop_all()
     db.create_all()
     #creating the admin user for the app
-    new_customer = Customer(name='Bidhya Gautam', email='bgautam@ivytech.edu', phone='1212121212',user_password='Admin@123',role=2)
+    new_customer = Customer(name='Super Admin', email='admin@email.com', phone='1212121212',user_password='admin@123',role=2)
     #saving data to database
+    db.session.add(new_customer)
+    new_customer = Customer(name='Test User', email='user@email.com', phone='1212121212',user_password='user',role=1)
     db.session.add(new_customer)
     db.session.commit()
     return render_template('home.html')
