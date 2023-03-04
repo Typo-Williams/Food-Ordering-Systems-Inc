@@ -21,17 +21,18 @@
             <li><a href="/">Home</a></li>
         </ul>
     </nav>
+    <span>
+        {% if current_user.is_authenticated %}
+            Hi {{ current_user.name }}!
+        {% endif %}
+    </span>
 </header>
 Welcome to food ordering app
 
 <body>
     
     <div class="gridcontainer">
-        <span>
-            {% if current_user.is_authenticated %}
-                Hi {{ current_user.name }}!
-            {% endif %}
-        </span>
+        
         {% block content %}{% endblock %}
         {% if current_user.is_authenticated and current_user.is_admin() %}
             <div class="middlecontainer1">

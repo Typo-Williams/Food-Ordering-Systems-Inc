@@ -10,21 +10,26 @@
                 {% for customer in customers %}
                   <option value="{{ customer.id }}">{{ customer.name }}</option>
                 {% endfor %}
-              </select><br>
+              </select><br/><br/>
                 
             {% else %}
               Order for: {{current_user.name }}
-              <input type="hidden" id="customer_id" name="customer_id" value="{{current_user.id}}" min="1"><br>
+              <input type="hidden" id="customer_id" name="customer_id" value="{{current_user.id}}" min="1"><br/>
             {% endif %}
 
-            <label for="food_items">Food Items:</label><br>
+           
+            <table>
+              <tr><th colspan="2">Select Food/s</th></tr>
             {% for food in foods %}
-              <input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">
-              <label for="food_{{ food.id }}">{{ food.name }} - {{ food.price }}</label>&nbsp;&nbsp;
-              <input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"><br>
+              <tr>
+              
+              <td class="leftAlign" style="width:20%"><input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">{{ food.name }} - ${{ "{:.2f}".format(food.price) }}</td>
+              <td class="leftAlign"><input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"></td>
+              </tr>
             {% endfor %}
-            <hr>
-            <input type="submit" value="Place Order">
+            <tr><td colspan="2" class="centerAlign"><input type="submit" value="Place Order"></td></tr>
+            </table>
+            
           </form>
         </div>
 

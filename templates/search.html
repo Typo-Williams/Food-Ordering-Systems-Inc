@@ -49,8 +49,8 @@
 <thead>
   <tr>
     <th>Item</th>
-    <th>Price</th>
     <th>Quantity</th>
+    <th>Price</th>
     <th>Total</th>
   </tr>
 </thead>
@@ -58,9 +58,9 @@
   {% for item in search_results.order_items %}
     <tr>
       <td>{{ item.food.name }}</td>
-      <td>{{ item.food.price }}</td>
       <td>{{ item.quantity }}</td>
-      <td>{{ item.total_price }}</td>
+      <td>${{  "{:.2f}".format(item.food.price) }}</td>
+      <td>${{  "{:.2f}".format(item.total_price) }}</td>
     </tr>
   {% endfor %}
 </tbody>

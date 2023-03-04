@@ -3,25 +3,44 @@
 
         <div class="topcontainer" id="menutop">
             <h2>Menu</h2>
-            <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for food_item in food_items %}
-                <tr>
-                    <td>{{ food_item.name }}</td>
-                    <td>{{ food_item.price }}</td>
-                    <td>{{ food_item.category }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            </table>
-
+            <div class="row">
+                <div class="col">
+                  <h3>Appetizer</h3>
+                  
+                    {% for food_item in appetizers %}
+                    <p>
+                            {{ food_item.name }} - ${{ "{:.2f}".format(food_item.price) }}<br/>
+                    </p>
+                        {% endfor %}
+                  
+                </div>
+                <div class="col">
+                  <h3>Entree</h3>
+                  {% for food_item in entrees %}
+                    <p>
+                            {{ food_item.name }} - ${{ "{:.2f}".format(food_item.price) }}<br/>
+                    </p>
+                        {% endfor %}
+                </div>
+                <div class="col">
+                  <h3>Dessert</h3>
+                  {% for food_item in dessets %}
+                    <p>
+                            {{ food_item.name }} - ${{ "{:.2f}".format(food_item.price) }}<br/>
+                    </p>
+                        {% endfor %}
+                </div>
+                <div class="col">
+                  <h3>Drinks</h3>
+                  {% for food_item in drinks %}
+                    <p>
+                            {{ food_item.name }} - ${{ "{:.2f}".format(food_item.price) }}<br/>
+                    </p>
+                        {% endfor %}
+                </div>
+              </div>
         </div>
+       
         
         {% endblock %}
+        

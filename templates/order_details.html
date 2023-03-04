@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="topcontainer" id="searchtop">
+    <div class="bill-container">
+        <div class="bill-header">
+          <h2>Food Order Bill</h2>
+          <p>Order Number: {{ order_details.order1.id }}</p>
+          <p>Date: {{order_details.order1.order_time}}</p>
+          <p>Order by: {{ order_details.order1.customer.name }}</p>
+        </div>
+        <div class="bill-body">
+          <table>
+            <tr>
+              <th>Item</th>
+              <th class="rightAlign">Quantity</th>
+              <th class="rightAlign">Price</th>
+              <th class="rightAlign">Amount</th>
+            </tr>
+            {% for item in order_details.order_items %}
+            <tr>
+                <td>{{ item.food.name }}</td>
+                <td class="displayNumber">{{ item.quantity }}</td>
+                <td class="displayNumber">${{  "{:.2f}".format(item.food.price) }}</td>
+                <td class="displayNumber">${{  "{:.2f}".format(item.total_price) }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <td colspan="3" class="rightAlign">Total</td>
+              <td>${{ "{:.2f}".format(order_total)}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="bill-footer">
+          <p>Thank you for your order!</p>
+        </div>
+      </div>
+
+</div>
+{% endblock %}

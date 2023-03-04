@@ -159,7 +159,11 @@ def create_food():
 @app.route('/foods', methods=['GET'])
 def food_list():
     food_items = Food.query.all()
-    return render_template('foods.html', food_items=food_items)
+    entrees=Food.query.filter_by(category='entree')
+    appetizers=Food.query.filter_by(category='appetizer')
+    desserts=Food.query.filter_by(category='dessert')
+    drinks=Food.query.filter_by(category='drink')
+    return render_template('foods.html', food_items=food_items,entrees=entrees,appetizers=appetizers,desserts=desserts,drinks=drinks)
 
 #------ORDER ROUTES----------------
 # Route to create a new order
@@ -191,13 +195,8 @@ def create_order():
                 db.session.add(order_item)
         #commit the changes to the database
         db.session.commit()
-
-        #need customer and food list to display in new order forms
-        customers = Customer.query.filter_by(role=1)# returns all the customer in customer table
-        foods = Food.query.all() #returns all the foods in food table
-        #return to new order page with customer and food list
-        return render_template('new_order.html', customers=customers, foods=foods)
-    
+        return redirect(url_for('get_order_details', id=new_order.id))
+        
 
 # Route to display the new order form page
 @app.route('/order/new')
@@ -207,6 +206,24 @@ def new_order():
     foods = Food.query.all() #returns all the foods in food table
     #return to new order page with customer and food list
     return render_template('new_order.html', customers=customers, foods=foods)
+
+# Route to display the particular order details
+@app.route('/order/<int:id>', methods=['GET'])
+@login_required
+def get_order_details(id):
+    
+    order_details=[]
+    # get the order details
+    order = Order.query.get(id)
+    # get the order items for the order from the database
+    order_items = OrderItem.query.filter_by(order_id=id).all()
+    order_details={
+        'order1':order,
+        'order_items':order_items
+    }
+    order_total= OrderItem.query.with_entities(db.func.sum(OrderItem.total_price).label("Grand_total")).filter(
+        OrderItem.order_id == id).first()
+    return render_template('order_details.html', order_details=order_details,order_total=order_total.Grand_total)
 
 # Route to display the order history
 @app.route('/orderhistory')

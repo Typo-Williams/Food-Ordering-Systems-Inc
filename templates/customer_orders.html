@@ -3,7 +3,7 @@
    
         <div class="topcontainer" id="customer_orderstop">
             <h2>Orders Details</h2>
-            <h3>Order by: {{ customer.name }}</h3>
+            <h3>Order by: {{ customer.name }}</h3><br/>
             <table>
                 <thead>
                     {% for order in orders %}
@@ -19,21 +19,21 @@
                                 <thead>
                                     <tr>
                                         <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Rate</th>
-                                        <th>Total</th>
+                                        <th class="displayNumber">Quantity</th>
+                                        <th class="displayNumber">Rate</th>
+                                        <th class="displayNumber">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for order_item in order.order_items %}    
                                 <tr>
                                     <td>{{ order_item.food_name }}</td>
-                                    <td>{{ order_item.quantity }}</td>
-                                    <td>${{ order_item.rate }}</td>
-                                    <td>${{ order_item.total_price }}</td>
+                                    <td class="displayNumber">{{ order_item.quantity }}</td>
+                                    <td class="displayNumber">${{ "{:.2f}".format(order_item.rate) }}</td>
+                                    <td class="displayNumber">${{ "{:.2f}".format(order_item.total_price) }}</td>
                                 </tr>
                                 {% endfor %}
-                                <tr><td colspan="3"><bold>Total: ${{order.order_amount}}</bold></td></tr>
+                                <tr><td colspan="3" class="rightAlign"><bold>Total</bold></td><td><bold> ${{"{:.2f}".format(order.order_amount)}}</bold></td></tr>
                                 </tbody>
                             </table>
                         </td>
