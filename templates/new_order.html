@@ -23,8 +23,8 @@
             {% for food in foods %}
               <tr>
               
-              <td class="leftAlign" style="width:20%"><input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">{{ food.name }} - ${{ "{:.2f}".format(food.price) }}</td>
-              <td class="leftAlign"><input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"></td>
+              <td class="leftAlign" style="width:80%"><input type="checkbox" id="food_{{ food.id }}" name="food_items" value="{{ food.id }}">{{ food.name }} - ${{ "{:.2f}".format(food.price) }}</td>
+              <td class="leftAlign" style="width:20%"><input type="number" id="quantity_{{ food.id }}" name="quantity_{{ food.id }}" value="1" min="1"></td>
               </tr>
             {% endfor %}
             <tr><td colspan="2" class="centerAlign"><input type="submit" value="Place Order"></td></tr>
