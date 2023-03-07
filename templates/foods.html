@@ -24,7 +24,7 @@
                 </div>
                 <div class="col">
                   <h3>Dessert</h3>
-                  {% for food_item in dessets %}
+                  {% for food_item in desserts %}
                     <p>
                             {{ food_item.name }} - ${{ "{:.2f}".format(food_item.price) }}<br/>
                     </p>
