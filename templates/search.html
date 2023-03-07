@@ -15,10 +15,11 @@
       <br><br>
     </form>
 <br>
+
 {% if search_results %}
 <h3>Search Results:</h3>
 {% if search_type == 'customer' %}
-<table>
+<table style="width:50%" align="center">
 <thead>
   <tr>
     <th>Customer Name</th>
@@ -45,7 +46,7 @@
 <p>Order Time: {{search_results.order1.order_time}}</p>
 <p>Customer: {{ search_results.order1.customer.name }}</p>
 
-<table>
+<table style="width:50%" align="center">
 <thead>
   <tr>
     <th>Item</th>
