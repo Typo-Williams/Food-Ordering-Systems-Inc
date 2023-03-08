@@ -31,8 +31,6 @@ def login():
         user_password = request.form['user_password']
         #find the user/customer
         user=Customer.query.filter_by(email=email,user_password=user_password).first()
-        #email='admin@mariopizza.com'
-        #user = Customer.query.get(user_email=email)
         if user:
             user.authenticated = True
             db.session.add(user)
@@ -40,7 +38,7 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for("index"))
         else:
-            flash('Login failed, please try again')
+            flash('Login failed, please try again','error')
             return render_template("login.html")
     else:
         return render_template("login.html")
@@ -59,8 +57,6 @@ def logout():
 # Route to display the homepage
 @app.route('/')
 def index():
-    # db.drop_all()
-    # db.create_all()
     #return to the home page of the app
     return render_template('home.html',current_user=current_user)
 
@@ -80,18 +76,23 @@ def create_customer():
         return render_template('new_customer.html')
     else: #if post request, insert a new customer record 
         #getting form posted data into variables
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
-        user_password = request.form['user_password']
-        #creating a instance of a customer
-        new_customer = Customer(name=name, email=email, phone=phone,user_password=user_password)
-        #saving data to database
-        db.session.add(new_customer)
-        db.session.commit()
-        #store a message which will be displayed in new customer form
-        flash('New customer created successfully')
-        #display the new customer form after inserting new record with success message
+        try:
+            name = request.form['name']
+            email = request.form['email']
+            phone = request.form['phone']
+            user_password = request.form['user_password']
+            #creating a instance of a customer
+            new_customer = Customer(name=name, email=email, phone=phone,user_password=user_password)
+            #saving data to database
+            db.session.add(new_customer)
+            db.session.commit()
+            #store a message which will be displayed in new customer form
+            flash('New customer created successfully','success')
+        except Exception as e:
+            #store a message which will be displayed in new customer form
+            flash('Error! Please try again','error')
+        
+        #display the new customer form after saving record with success/error message
         return render_template('new_customer.html') 
 
 # Route to get information about all customers with their orders
@@ -107,8 +108,6 @@ def get_customers_with_orders():
 @login_required
 def get_customer_orders(id):
     customer = Customer.query.get(id) #get customer by ID
-    if not customer:
-        return jsonify({'message': 'Customer not found'})
     orders = customer.orders #get all the order of this customer
     orders_data = [] #empty array to store order details
     order_items_data=[] #empty array to store order item details
@@ -146,19 +145,25 @@ def create_food():
     if request.method=='GET':
         return render_template('new_food.html')
     else:
-        name = request.form['name']
-        price = request.form['price']
-        category=request.form['category']
-        new_food = Food(name=name, price=price,category=category)
-        db.session.add(new_food)
-        db.session.commit()
-        flash('New food item added successfully')
+        try:
+            name = request.form['name']
+            price = request.form['price']
+            category=request.form['category']
+            new_food = Food(name=name, price=price,category=category)
+            db.session.add(new_food)
+            db.session.commit()
+            #store a message which will be displayed in new food item form
+            flash('New food item created successfully','success')
+        except Exception as e:
+            #store a message which will be displayed in new food item form
+            flash('Error! Please try again','error')
         return render_template('new_food.html')
     
 # Route to list all food items
 @app.route('/foods', methods=['GET'])
 def food_list():
     food_items = Food.query.all()
+    #getting food items based on their categories
     entrees=Food.query.filter_by(category='entree')
     appetizers=Food.query.filter_by(category='appetizer')
     desserts=Food.query.filter_by(category='dessert')
@@ -176,26 +181,31 @@ def create_order():
         #return to new order page with customer and food list
         return render_template('new_order.html', customers=customers, foods=foods)
     else:
-        #getting customer id from posted form
-        customer_id = request.form['customer_id']
-        customer = Customer.query.get(customer_id)#getting customer by ID
-        if not customer: #if not a valid customer, return without placing an order
-            return jsonify({'message': 'Customer not found'})
-        # Create a new order
-        new_order = Order(customer=customer,order_time=datetime.now())
-        db.session.add(new_order)
+        try:
+            #getting customer id from posted form
+            customer_id = request.form['customer_id']
+            customer = Customer.query.get(customer_id)#getting customer by ID
+            # Create a new order
+            new_order = Order(customer=customer,order_time=datetime.now())
+            db.session.add(new_order)
 
-        # Get the selected food items and their quantities from the form data
-        food_items = request.form.getlist('food_items')
-        for food_id in food_items:
-            food = Food.query.filter_by(id=food_id).first()
-            if food is not None: #if valid food
-                quantity = int(request.form.get('quantity_{}'.format(food_id))) #get quantity by breaking the value after quantity_
-                order_item = OrderItem(food=food, quantity=quantity,total_price=round(food.price*quantity,2),order=new_order)
-                db.session.add(order_item)
-        #commit the changes to the database
-        db.session.commit()
-        return redirect(url_for('get_order_details', id=new_order.id))
+            # Get the selected food items and their quantities from the form data
+            food_items = request.form.getlist('food_items')
+            for food_id in food_items:
+                food = Food.query.filter_by(id=food_id).first()
+                if food is not None: #if valid food
+                    quantity = int(request.form.get('quantity_{}'.format(food_id))) #get quantity by breaking the value after quantity_
+                    order_item = OrderItem(food=food, quantity=quantity,total_price=round(food.price*quantity,2),order=new_order)
+                    db.session.add(order_item)
+            #commit the changes to the database
+            db.session.commit()
+            return redirect(url_for('get_order_details', id=new_order.id))
+        except Exception as e:
+            flash('Error! Please try again.','error')
+            customers = Customer.query.filter_by(role=1) # returns all the customer in customer table excepts admins
+            foods = Food.query.all() #returns all the foods in food table
+            #return to new order page with customer and food list
+            return render_template('new_order.html', customers=customers, foods=foods)
         
 
 # Route to display the new order form page
@@ -240,35 +250,32 @@ def search():
     #stores the search type i.e customer or order
     search_type = request.args.get('search_type')
     search_results = []
+    total_amount=0
     #Get the result based on user type in value and search type
     if search_query and search_type:
         if search_type == 'customer': #if this search is to search customer
             #search the user type in value in customer table
             search_results = db.session.query(Customer).filter(Customer.name.ilike(f'%{search_query}%')).all()
+            
+            if not search_results:
+                flash('No results found.','error')
         elif search_type == 'order': #if this search is to search order
             search_results=[]
             # get the order with the specified ID from the database
             order = Order.query.get(int(search_query))
             # get the order items for the order from the database
             order_items = OrderItem.query.filter_by(order_id=search_query).all()
+            if not order_items:
+                flash('No results found.','error')
+            else:
+                for items in order_items:
+                    total_amount=total_amount+items.total_price
             search_results={
                 'order1':order,
                 'order_items':order_items
             }
     #return to search page with the search result
-    return render_template('search.html', search_query=search_query, search_type=search_type, search_results=search_results)
+    return render_template('search.html', search_query=search_query, search_type=search_type, search_results=search_results,total_amount=total_amount)
 
-#application setup route
-@app.route('/appsetup')
-def app_setup():
-    db.drop_all()
-    db.create_all()
-    #creating the admin user for the app
-    new_customer = Customer(name='Super Admin', email='admin@email.com', phone='1212121212',user_password='admin@123',role=2)
-    #saving data to database
-    db.session.add(new_customer)
-    new_customer = Customer(name='Test User', email='user@email.com', phone='1212121212',user_password='user',role=1)
-    db.session.add(new_customer)
-    db.session.commit()
-    return render_template('home.html')
+
   

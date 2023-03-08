@@ -542,3 +542,33 @@ table, .displayNumber{
   button[type="submit"]:hover {
     background-color: #0c82f0;
   }
+
+  .flash-message {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  /* Define the styles for the different types of flash messages */
+  .flash-message.error {
+    background-color: #f2dede;
+    color: #a94442;
+  }
+  /* the flash-message class */
+  .flash-message.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+  
+  .flash-message.warning {
+    background-color: #fcf8e3;
+    color: #8a6d3b;
+  }
+  
+  .flash-message.info {
+    background-color: #d9edf7;
+    color: #31708f;
+  }
